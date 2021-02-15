@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Example</title>
+        <title>Gourmet Gorilla Unit Version 1 Portal</title>
     </head>
     <body>
-        <p>This is an example of a simple HTML page with one paragraph.</p>
+    
+	<form method="get" onsubmit="MQTT_PUB(); return false;" style="margin-top:10%;">
+    
+      <label for="ThingID">ThingID</label>
+      <input type="text" id="ThingID" name="ThingID" value="">
+	  
+      <label for="Temp">Target Temp:</label>
+      <input type="text" id="Temp" name="Temp" value="100">
+     
+	<button type="submit">Submit Change</button>
+    </form>
+	
     </body>
+	
+	
+<script>
+	
+	function MQTT_PUB()
+	{
+		var url = "https://r05gesrigg.execute-api.us-west-2.amazonaws.com/Prod/publish";
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", url);
+		console.log("datestamp recieved");
+		xhr.setRequestHeader("Content-Type", "application/json");
+
+		xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			console.log(xhr.status);
+			console.log(xhr.responseText);
+		}};
+
+		var data = '{"Temp":130, "ThingID":"GG103"}';
+
+		xhr.send(data);
+	}
+
+</script>
+	
 </html>
